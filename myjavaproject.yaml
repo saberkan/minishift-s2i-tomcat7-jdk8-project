@@ -1,0 +1,678 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: tprestjersey
+    name: tprestjersey
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: tprestjersey:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        uri: https://github.com/saberkan/TPRestJersey.git
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: tomcat-7-jdk-8-builder:latest
+          namespace: myjavaproject
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: 61lSVj8XJk0qqiFaxMCN
+      type: GitHub
+    - generic:
+        secret: a_djcEhWuHSbX8Y8EvBi
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+- apiVersion: v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: tprestjersey
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: tprestjersey-1-build
+    creationTimestamp: null
+    labels:
+      app: tprestjersey
+      buildconfig: tprestjersey
+      openshift.io/build-config.name: tprestjersey
+      openshift.io/build.start-policy: Serial
+    name: tprestjersey-1
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: tprestjersey
+      uid: 2bdb48b1-f139-11e7-8bb6-22336ece68e1
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-5j88s
+      to:
+        kind: ImageStreamTag
+        name: tprestjersey:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: salahddine.aberkan@gmail.com
+          name: Administrateur
+        commit: 306eed10e66a95b21341e1c379fa7a59807506ab
+        committer:
+          email: salahddine.aberkan@gmail.com
+          name: Administrateur
+        message: cryptage
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        uri: https://github.com/saberkan/TPRestJersey.git
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: saberkan/s2i-tomcat7-jdk8-builder@sha256:b7fba39c6380fa83f645bf0a22bca644253bc87fe348d404f81b7f940a25b98e
+      type: Source
+    triggeredBy:
+    - message: Build configuration change
+  status:
+    config:
+      name: tprestjersey
+    output:
+      to:
+        imageDigest: sha256:1f59894bc06f6427181a172c85e634b416f5693268566680e3b5c96b50422688
+    outputDockerImageReference: 172.30.1.1:5000/myjavaproject/tprestjersey:latest
+    phase: New
+    stages:
+    - durationMilliseconds: 1317
+      name: FetchInputs
+      startTime: 2018-01-04T10:22:33Z
+      steps:
+      - durationMilliseconds: 1317
+        name: FetchGitSource
+        startTime: 2018-01-04T10:22:33Z
+    - durationMilliseconds: 743
+      name: CommitContainer
+      startTime: 2018-01-04T10:22:57Z
+      steps:
+      - durationMilliseconds: 743
+        name: CommitContainer
+        startTime: 2018-01-04T10:22:57Z
+    - durationMilliseconds: 23000
+      name: Assemble
+      startTime: 2018-01-04T10:22:35Z
+      steps:
+      - durationMilliseconds: 23000
+        name: AssembleBuildScripts
+        startTime: 2018-01-04T10:22:35Z
+    - name: PostCommit
+      startTime: 2018-01-04T10:22:58Z
+      steps:
+      - name: RunPostCommitHook
+        startTime: 2018-01-04T10:22:58Z
+    - durationMilliseconds: 42030
+      name: PushImage
+      startTime: 2018-01-04T10:22:58Z
+      steps:
+      - durationMilliseconds: 42030
+        name: PushImage
+        startTime: 2018-01-04T10:22:58Z
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/display-name: tomcat 7, JDK 8 builder
+      openshift.io/image.dockerRepositoryCheck: 2018-01-04T10:06:27Z
+    creationTimestamp: null
+    generation: 2
+    name: tomcat-7-jdk-8-builder
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/display-name: Tomcat 7, JDK 8 builder
+        openshift.io/provider-display-name: Saberkan, Inc.
+        sampleRepo: https://github.com/saberkan/TPRestJersey.git
+        supports: java
+        tags: builder,tomcat-7,jdk-8
+      from:
+        kind: DockerImage
+        name: 172.30.1.1:5000/myjavaproject/tomcat-7-jdk-8-builder:latest
+      generation: 2
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: tprestjersey
+    name: tprestjersey
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: 172.30.1.1:5000/myjavaproject/tprestjersey:latest
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: tomcat-7-jdk-8-builder
+    name: tomcat-7-jdk-8-builder
+  spec:
+    replicas: 1
+    selector:
+      app: tomcat-7-jdk-8-builder
+      deploymentconfig: tomcat-7-jdk-8-builder
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: tomcat-7-jdk-8-builder
+          deploymentconfig: tomcat-7-jdk-8-builder
+      spec:
+        containers:
+        - image: saberkan/s2i-tomcat7-jdk8-builder@sha256:b7fba39c6380fa83f645bf0a22bca644253bc87fe348d404f81b7f940a25b98e
+          imagePullPolicy: Always
+          name: tomcat-7-jdk-8-builder
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - tomcat-7-jdk-8-builder
+        from:
+          kind: ImageStreamTag
+          name: tomcat-7-jdk-8-builder:latest
+          namespace: myjavaproject
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: tprestjersey
+    name: tprestjersey
+  spec:
+    replicas: 1
+    selector:
+      app: tprestjersey
+      deploymentconfig: tprestjersey
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: tprestjersey
+          deploymentconfig: tprestjersey
+      spec:
+        containers:
+        - image: 172.30.1.1:5000/myjavaproject/tprestjersey@sha256:1f59894bc06f6427181a172c85e634b416f5693268566680e3b5c96b50422688
+          imagePullPolicy: Always
+          name: tprestjersey
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - tprestjersey
+        from:
+          kind: ImageStreamTag
+          name: tprestjersey:latest
+          namespace: myjavaproject
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/desired-replicas: "1"
+      openshift.io/deployer-pod.name: tomcat-7-jdk-8-builder-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: tomcat-7-jdk-8-builder
+      openshift.io/deployment.cancelled: "true"
+      openshift.io/deployment.phase: Failed
+      openshift.io/deployment.replicas: "0"
+      openshift.io/deployment.status-reason: The deployment was cancelled by the user
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"v1","metadata":{"name":"tomcat-7-jdk-8-builder","namespace":"myjavaproject","selfLink":"/apis/apps.openshift.io/v1/namespaces/myjavaproject/deploymentconfigs/tomcat-7-jdk-8-builder","uid":"d211747d-f137-11e7-8bb6-22336ece68e1","resourceVersion":"3033","generation":2,"creationTimestamp":"2018-01-04T10:12:50Z","labels":{"app":"tomcat-7-jdk-8-builder"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["tomcat-7-jdk-8-builder"],"from":{"kind":"ImageStreamTag","namespace":"myjavaproject","name":"tomcat-7-jdk-8-builder:latest"},"lastTriggeredImage":"saberkan/s2i-tomcat7-jdk8-builder@sha256:b7fba39c6380fa83f645bf0a22bca644253bc87fe348d404f81b7f940a25b98e"}}],"replicas":1,"test":false,"selector":{"app":"tomcat-7-jdk-8-builder","deploymentconfig":"tomcat-7-jdk-8-builder"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"tomcat-7-jdk-8-builder","deploymentconfig":"tomcat-7-jdk-8-builder"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"tomcat-7-jdk-8-builder","image":"saberkan/s2i-tomcat7-jdk8-builder@sha256:b7fba39c6380fa83f645bf0a22bca644253bc87fe348d404f81b7f940a25b98e","ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"ImageStreamTag","namespace":"myjavaproject","name":"tomcat-7-jdk-8-builder:latest"}}}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2018-01-04T10:12:50Z","lastTransitionTime":"2018-01-04T10:12:50Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: tomcat-7-jdk-8-builder
+      openshift.io/deployment-config.name: tomcat-7-jdk-8-builder
+    name: tomcat-7-jdk-8-builder-1
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: tomcat-7-jdk-8-builder
+      uid: d211747d-f137-11e7-8bb6-22336ece68e1
+  spec:
+    replicas: 0
+    selector:
+      app: tomcat-7-jdk-8-builder
+      deployment: tomcat-7-jdk-8-builder-1
+      deploymentconfig: tomcat-7-jdk-8-builder
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: tomcat-7-jdk-8-builder
+          openshift.io/deployment.name: tomcat-7-jdk-8-builder-1
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: tomcat-7-jdk-8-builder
+          deployment: tomcat-7-jdk-8-builder-1
+          deploymentconfig: tomcat-7-jdk-8-builder
+      spec:
+        containers:
+        - image: saberkan/s2i-tomcat7-jdk8-builder@sha256:b7fba39c6380fa83f645bf0a22bca644253bc87fe348d404f81b7f940a25b98e
+          imagePullPolicy: Always
+          name: tomcat-7-jdk-8-builder
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    replicas: 0
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.name: tprestjersey-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: tprestjersey
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: image change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"v1","metadata":{"name":"tprestjersey","namespace":"myjavaproject","selfLink":"/apis/apps.openshift.io/v1/namespaces/myjavaproject/deploymentconfigs/tprestjersey","uid":"2be013a9-f139-11e7-8bb6-22336ece68e1","resourceVersion":"3306","generation":3,"creationTimestamp":"2018-01-04T10:22:30Z","labels":{"app":"tprestjersey"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["tprestjersey"],"from":{"kind":"ImageStreamTag","namespace":"myjavaproject","name":"tprestjersey:latest"},"lastTriggeredImage":"172.30.1.1:5000/myjavaproject/tprestjersey@sha256:1f59894bc06f6427181a172c85e634b416f5693268566680e3b5c96b50422688"}}],"replicas":1,"test":false,"selector":{"app":"tprestjersey","deploymentconfig":"tprestjersey"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"tprestjersey","deploymentconfig":"tprestjersey"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"tprestjersey","image":"172.30.1.1:5000/myjavaproject/tprestjersey@sha256:1f59894bc06f6427181a172c85e634b416f5693268566680e3b5c96b50422688","ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":2,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"image change","causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"ImageStreamTag","namespace":"myjavaproject","name":"tprestjersey:latest"}}}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2018-01-04T10:22:30Z","lastTransitionTime":"2018-01-04T10:22:30Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: tprestjersey
+      openshift.io/deployment-config.name: tprestjersey
+    name: tprestjersey-1
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: tprestjersey
+      uid: 2be013a9-f139-11e7-8bb6-22336ece68e1
+  spec:
+    replicas: 1
+    selector:
+      app: tprestjersey
+      deployment: tprestjersey-1
+      deploymentconfig: tprestjersey
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: tprestjersey
+          openshift.io/deployment.name: tprestjersey-1
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: tprestjersey
+          deployment: tprestjersey-1
+          deploymentconfig: tprestjersey
+      spec:
+        containers:
+        - image: 172.30.1.1:5000/myjavaproject/tprestjersey@sha256:1f59894bc06f6427181a172c85e634b416f5693268566680e3b5c96b50422688
+          imagePullPolicy: Always
+          name: tprestjersey
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    replicas: 0
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/host.generated: "true"
+    creationTimestamp: null
+    labels:
+      app: tprestjersey
+    name: tprestjersey
+  spec:
+    host: tprestjersey-myjavaproject.192.168.64.2.nip.io
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: tprestjersey
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: 2018-01-04T10:25:10Z
+        status: "True"
+        type: Admitted
+      host: tprestjersey-myjavaproject.192.168.64.2.nip.io
+      routerName: router
+      wildcardPolicy: None
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: tomcat-7-jdk-8-builder
+    name: tomcat-7-jdk-8-builder
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: tomcat-7-jdk-8-builder
+      deploymentconfig: tomcat-7-jdk-8-builder
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: tprestjersey
+    name: tprestjersey
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: tprestjersey
+      deploymentconfig: tprestjersey
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/build.name: tprestjersey-1
+      openshift.io/scc: privileged
+    creationTimestamp: null
+    labels:
+      openshift.io/build.name: tprestjersey-1
+    name: tprestjersey-1-build
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: Build
+      name: tprestjersey-1
+      uid: 2c0d1d1d-f139-11e7-8bb6-22336ece68e1
+  spec:
+    containers:
+    - args:
+      - --loglevel=0
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"v1","metadata":{"name":"tprestjersey-1","namespace":"myjavaproject","selfLink":"/apis/build.openshift.io/v1/namespaces/myjavaproject/builds/tprestjersey-1","uid":"2c0d1d1d-f139-11e7-8bb6-22336ece68e1","resourceVersion":"3275","creationTimestamp":"2018-01-04T10:22:31Z","labels":{"app":"tprestjersey","buildconfig":"tprestjersey","openshift.io/build-config.name":"tprestjersey","openshift.io/build.start-policy":"Serial"},"annotations":{"openshift.io/build-config.name":"tprestjersey","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"tprestjersey","uid":"2bdb48b1-f139-11e7-8bb6-22336ece68e1","controller":true}]},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://github.com/saberkan/TPRestJersey.git"}},"strategy":{"type":"Source","sourceStrategy":{"from":{"kind":"DockerImage","name":"saberkan/s2i-tomcat7-jdk8-builder@sha256:b7fba39c6380fa83f645bf0a22bca644253bc87fe348d404f81b7f940a25b98e"}}},"output":{"to":{"kind":"DockerImage","name":"172.30.1.1:5000/myjavaproject/tprestjersey:latest"},"pushSecret":{"name":"builder-dockercfg-5j88s"}},"resources":{},"postCommit":{},"nodeSelector":null,"triggeredBy":[{"message":"Build configuration change"}]},"status":{"phase":"New","outputDockerImageReference":"172.30.1.1:5000/myjavaproject/tprestjersey:latest","config":{"kind":"BuildConfig","namespace":"myjavaproject","name":"tprestjersey"},"output":{}}}
+      - name: SOURCE_REPOSITORY
+        value: https://github.com/saberkan/TPRestJersey.git
+      - name: SOURCE_URI
+        value: https://github.com/saberkan/TPRestJersey.git
+      - name: ORIGIN_VERSION
+        value: v3.6.1+008f2d5
+      - name: ALLOWED_UIDS
+        value: 1-
+      - name: DROP_CAPS
+        value: KILL,MKNOD,SETGID,SETUID,SYS_CHROOT
+      - name: PUSH_DOCKERCFG_PATH
+        value: /var/run/secrets/openshift.io/push
+      image: openshift/origin-sti-builder:v3.6.1
+      imagePullPolicy: IfNotPresent
+      name: sti-build
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /var/run/docker.sock
+        name: docker-socket
+      - mountPath: /var/run/secrets/openshift.io/push
+        name: builder-dockercfg-5j88s-push
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: builder-token-ghk3t
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    imagePullSecrets:
+    - name: builder-dockercfg-5j88s
+    nodeName: localhost
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: builder
+    serviceAccountName: builder
+    terminationGracePeriodSeconds: 30
+    volumes:
+    - hostPath:
+        path: /var/run/docker.sock
+      name: docker-socket
+    - name: builder-dockercfg-5j88s-push
+      secret:
+        defaultMode: 420
+        secretName: builder-dockercfg-5j88s
+    - name: builder-token-ghk3t
+      secret:
+        defaultMode: 420
+        secretName: builder-token-ghk3t
+  status:
+    phase: Pending
+    qosClass: BestEffort
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubernetes.io/created-by: |
+        {"kind":"SerializedReference","apiVersion":"v1","reference":{"kind":"ReplicationController","namespace":"myjavaproject","name":"tprestjersey-1","uid":"5535e6ce-f139-11e7-8bb6-22336ece68e1","apiVersion":"v1","resourceVersion":"3325"}}
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: tprestjersey
+      openshift.io/deployment.name: tprestjersey-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: null
+    generateName: tprestjersey-1-
+    labels:
+      app: tprestjersey
+      deployment: tprestjersey-1
+      deploymentconfig: tprestjersey
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: tprestjersey-1
+      uid: 5535e6ce-f139-11e7-8bb6-22336ece68e1
+  spec:
+    containers:
+    - image: 172.30.1.1:5000/myjavaproject/tprestjersey@sha256:1f59894bc06f6427181a172c85e634b416f5693268566680e3b5c96b50422688
+      imagePullPolicy: Always
+      name: tprestjersey
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+          - SYS_CHROOT
+        privileged: false
+        runAsUser: 1000060000
+        seLinuxOptions:
+          level: s0:c8,c2
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-t164h
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    imagePullSecrets:
+    - name: default-dockercfg-qbvgr
+    nodeName: localhost
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000060000
+      seLinuxOptions:
+        level: s0:c8,c2
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    volumes:
+    - name: default-token-t164h
+      secret:
+        defaultMode: 420
+        secretName: default-token-t164h
+  status:
+    phase: Pending
+    qosClass: BestEffort
+kind: List
+metadata: {}

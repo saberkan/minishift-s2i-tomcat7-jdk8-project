@@ -1,0 +1,28 @@
+{
+      "kind": "ImageStream",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "tomcat-7-jdk-8-builder",
+        "annotations": {
+          "openshift.io/display-name": "tomcat 7, JDK 8 builder"
+        }
+      },
+      "spec": {
+        "tags": [
+          {
+            "name": "latest",
+            "annotations": {
+              "openshift.io/display-name": "Tomcat 7, JDK 8 builder",
+              "openshift.io/provider-display-name": "Saberkan, Inc.",
+              "tags": "builder,tomcat-7,jdk-8",
+              "supports":"java",
+              "sampleRepo": "https://github.com/saberkan/TPRestJersey.git"
+            },
+	    "from": {
+	      "kind": "DockerImage",
+              "name": "saberkan/s2i-tomcat7-jdk8-builder"
+	    }
+          }
+	]
+	}
+}

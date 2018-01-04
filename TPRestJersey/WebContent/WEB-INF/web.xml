@@ -1,0 +1,60 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+  <display-name>Archetype Created Web Application</display-name>
+	<servlet>
+		<servlet-name>jersey-serlvet</servlet-name>
+		<servlet-class>
+                     com.sun.jersey.spi.container.servlet.ServletContainer
+                </servlet-class>
+		<init-param>
+		     <param-name>com.sun.jersey.config.property.packages</param-name>
+		     <param-value>fr.dauphine.tprestjersey.services</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>jersey-serlvet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- le user et le role dans le tomcat-users.xml -->
+	<!-- 
+		Remarque : le mot de passe est en clair
+		pour changer : dans server.xml <realm ... diget="sha" ou "md5" 
+		mettre dans user-tomcat password le mot de passe crypté
+		
+		<role rolename="utilisateur"/>
+  		<user username="stagiaire" password="e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4" roles="utilisateur"/>
+  		=> e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4 : secret
+	 -->
+
+	 
+	<security-constraint> 
+	    <web-resource-collection> 
+	    	<web-resource-name>TPRestJersey</web-resource-name>
+	        <url-pattern>/todo/list</url-pattern> 
+	    </web-resource-collection> 
+	 
+	    <auth-constraint> 
+	            <role-name>utilisateur</role-name> 
+	    </auth-constraint> 
+	</security-constraint> 
+	 
+	<login-config> 
+	    <auth-method>BASIC</auth-method> 
+	    <realm-name>Application Jersey</realm-name> 
+	</login-config>
+		
+	<security-role> 
+	    <role-name>utilisateur</role-name> 
+	</security-role> 
+
+</web-app>
+
+
